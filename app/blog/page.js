@@ -1,7 +1,11 @@
-export default function BlogPage(){
+export default async function Page() {
+    const data = await fetch('https://api.vercel.app/blog')
+    const posts = await data.json()
     return (
-        <>
-            <h1>Welcome to my Blog post!</h1>
-        </>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
     )
-}
+  }

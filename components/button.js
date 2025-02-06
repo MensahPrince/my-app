@@ -1,6 +1,8 @@
+import styles from './styles.module.css'
+
 export default function Button({ children }) {
     return (
-        <button>{children}</button>
+        <button className={styles.blog}>{children}</button>
         
     )
 }
