@@ -1,11 +1,15 @@
+import { db } from '@/lib/db';
+
 export default async function Page() {
-    const data = await fetch('https://api.vercel.app/blog')
-    const posts = await data.json()
+    const database = await db;
+    const allUsers = await database.all('SELECT * FROM users');
+    
     return (
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.title}</li>
+        {allUsers.map((user) => (
+          <li key={user.id}>{user.username} -- {user.email}</li>
         ))}
       </ul>
     )
-  }
+}
+
