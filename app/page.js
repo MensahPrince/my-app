@@ -1,7 +1,7 @@
 import CardImage from '@/components/cardImage';
 import InfoCard from '@/components/infocard';
 import styles from './styles.module.css';
-import { INFINITE_CACHE } from 'next/dist/lib/constants';
+import ErrorScreen from '@/components/errorscreen';
 
 export default async function Page() {
     const API_KEY = "";
@@ -10,7 +10,7 @@ export default async function Page() {
     
     if (!response.ok) {
         console.error('Failed to fetch weather data:', response.statusText);
-        return <p>Error fetching weather data</p>;
+        return <ErrorScreen/>;
     }
 
     const data = await response.json();
