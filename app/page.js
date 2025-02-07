@@ -3,7 +3,7 @@ import InfoCard from '@/components/infocard';
 import styles from './styles.module.css';
 
 export default async function Page() {
-    const API_KEY = "c1cef220d520c84f2833035e4a30cee1";
+    const API_KEY = "";
     const CITY_NAME = "Japan";
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=metric`);
     
