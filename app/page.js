@@ -1,10 +1,11 @@
 import CardImage from '@/components/cardImage';
 import InfoCard from '@/components/infocard';
 import styles from './styles.module.css';
+import { INFINITE_CACHE } from 'next/dist/lib/constants';
 
 export default async function Page() {
     const API_KEY = "";
-    const CITY_NAME = "Japan";
+    const CITY_NAME = "Malaysia";
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=metric`);
     
     if (!response.ok) {
@@ -20,9 +21,13 @@ export default async function Page() {
     }
 
     const weather = data.weather[0].main;
+    const description = data.weather[0].description;
     const location = data.name;
     const degrees = data.main.temp;
-    const src = weather === 'Clouds' ? "/cloudy.png" : "/default.png";
+    const src = weather === 'Clouds' ? "/cloudy.png" 
+                : weather === 'Clear'? "/sunny.png" 
+                : weather === 'Rain'? "/rainy.png"
+                :"/default.png";
     const alt = weather === 'Clouds' ? "Cloudy" : "Default";
     const humidImg = "/humidity.png"
     const ATP = data.main.pressure + " PS";
@@ -31,7 +36,7 @@ export default async function Page() {
     return (
         <section className={styles.container}>
             <div className={styles.left}>
-                <CardImage src={src} alt={alt} weather={weather} location={location} degrees={degrees} />
+                <CardImage src={src} alt={alt} weather={weather} location={location} degrees={degrees} description={description}/>
             </div>
             <div className={styles.right}>
                 <InfoCard url = {humidImg} alt = "Humidity" title = "Humidity" value = {data.main.humidity + "%"}/>

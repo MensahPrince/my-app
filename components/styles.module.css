@@ -25,3 +25,13 @@
     width: 120px;
 }
 
+.buttonloc{
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+}
+
+.buttonloc:hover{
+    cursor: pointer;
+    color: brown;
+}
