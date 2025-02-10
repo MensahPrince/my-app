@@ -1,7 +1,16 @@
 import styles from './styles.module.css'
 import Image from 'next/image'
+import { use } from 'react';
 
 export default function CardImage({ src, alt, weather, location, degrees, description }) {
+
+    const src  = use(src)
+    const alt = use(alt)
+    const weather = use(weather)
+    const location = use(location)
+    const degrees = use(degrees)
+    const description = use(description)
+
     return (
         <div className={styles.cardImage}>
             <Image src={src} alt={alt} width={50} height={50}/>

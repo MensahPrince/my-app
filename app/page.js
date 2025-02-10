@@ -2,18 +2,19 @@ import CardImage from '@/components/cardImage';
 import InfoCard from '@/components/infocard';
 import styles from './styles.module.css';
 import ErrorScreen from '@/components/errorscreen';
+import { Suspense } from 'react';
 
-export default async function Page() {
-    const API_KEY = "";
+export default  function Page() {
+    const API_KEY = "c1cef220d520c84f2833035e4a30cee1";
     const CITY_NAME = "Malaysia";
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=metric`);
+    const response =  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=metric`);
     
     if (!response.ok) {
         console.error('Failed to fetch weather data:', response.statusText);
         return <ErrorScreen/>;
     }
 
-    const data = await response.json();
+    const data = response.json();
 
     if (!data.weather || data.weather.length === 0) {
         console.error('Weather data is undefined or empty');
@@ -34,14 +35,16 @@ export default async function Page() {
     const ATPImg = "/pressure.png";
 
     return (
-        <section className={styles.container}>
-            <div className={styles.left}>
-                <CardImage src={src} alt={alt} weather={weather} location={location} degrees={degrees} description={description}/>
-            </div>
-            <div className={styles.right}>
-                <InfoCard url = {humidImg} alt = "Humidity" title = "Humidity" value = {data.main.humidity + "%"}/>
-                <InfoCard url = {ATPImg} alt ="Air Presssure" title="Air Pressure" value={ATP}/>
-            </div>
-        </section>
+        <Suspense fallback={<ErrorScreen/>}>
+            <section className={styles.container}>
+                <div className={styles.left}>
+                    <CardImage src={src} alt={alt} weather={weather} location={location} degrees={degrees} description={description}/>
+                </div>
+                <div className={styles.right}>
+                    <InfoCard url = {humidImg} alt = "Humidity" title = "Humidity" value = {data.main.humidity + "%"}/>
+                    <InfoCard url = {ATPImg} alt ="Air Presssure" title="Air Pressure" value={ATP}/>
+                </div>
+            </section>
+        </Suspense>
     );
 }
